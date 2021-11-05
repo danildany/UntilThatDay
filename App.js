@@ -20,7 +20,7 @@ export default function App() {
           <Stack.Screen
             name="AddScreen"
             component={AddScreen}
-            options={{ headerShown: false }}
+            // options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

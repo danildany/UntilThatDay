@@ -1,19 +1,42 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
+import DatePicker, {
+  getFormatedDate,
+  getToday,
+} from "react-native-modern-datepicker";
 
-export default function AddScreen() {
-  const navigation = useNavigation();
+export default AddScreen = () => {
+  let now = new Date().getTime();
+  const [selectedDate, setSelectedDate] = useState("");
+  let countDown = new Date(selectedDate).getTime();
+  let distance = countDown - now;
+  let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
   return (
-    <View>
+    <View
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <DatePicker
+        onSelectedChange={(date) => setSelectedDate(date)}
+        minimumDate={getFormatedDate(new Date(), "YYYY/MM/DD h:m")}
+        style={{
+          borderRadius: 30,
+          width: 350,
+        }}
+      />
       <Text
-        style={{ top: 200 }}
-        onPress={() => {
-          navigation.navigate("StartScreen");
+        style={{
+          bottom: 0,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        Esto
+        {"faltan " + dias + " dias"}
       </Text>
     </View>
   );
-}
+};
