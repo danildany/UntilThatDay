@@ -6,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AddScreen from "./screens/AddScreen";
+import CountScreeen from "./screens/CountScreeen";
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -20,6 +21,11 @@ export default function App() {
           <Stack.Screen
             name="AddScreen"
             component={AddScreen}
+            // options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CountScreen"
+            component={CountScreeen}
             // options={{ headerShown: false }}
           />
         </Stack.Navigator>
