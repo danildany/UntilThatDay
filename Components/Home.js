@@ -45,11 +45,16 @@ export default function Home() {
             let days = JSON.parse(item);
             let distance = days.end - now;
             let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
-
+            let progreso = Math.round(
+              ((now - days.start) / (days.end - days.start)) * 100
+            );
             return (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate("CountScreen", { dias: dias });
+                  navigation.navigate("CountScreen", {
+                    dias: dias,
+                    days: days,
+                  });
                 }}
                 key={index}
                 style={{
@@ -62,6 +67,27 @@ export default function Home() {
                 }}
               >
                 <Text>{days.title}</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: "blue",
+                    width: "98%",
+                    height: 20,
+                    borderRadius: 50,
+                    borderWidth: 2,
+                    overflow: "hidden",
+                  }}
+                >
+                  <View
+                    style={{
+                      backgroundColor: "red",
+                      width: `${progreso}%`,
+                      height: 20,
+                      borderRadius: 50,
+                    }}
+                  ></View>
+                </View>
               </TouchableOpacity>
               // <Image
               //   source={item}
