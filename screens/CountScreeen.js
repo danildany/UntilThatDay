@@ -1,14 +1,27 @@
-import React from "react";
-import { View, Text } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { View, Text, Button, TouchableOpacity } from "react-native";
+import { getData, storeData } from "../data/dataManager";
 
 const CountScreeen = ({ route }) => {
-  console.log(route);
-  console.log(route.params);
   let end = route.params.days.end;
   let start = route.params.days.start;
   let now = new Date().getTime();
-
   let progreso = Math.round(((now - start) / (end - start)) * 100);
+  const navigation = useNavigation();
+
+  const borrarInfo = async () => {
+    let data = await getData();
+    for (let i = 0; i < data.length; i++) {
+      let infoData = JSON.parse(data[i]);
+      if (infoData.id == route.params.days.id) {
+        data.splice(i, 1);
+      }
+    }
+    storeData(data);
+    navigation.navigate("StartScreen");
+  };
   return (
     <View
       style={{
@@ -28,7 +41,7 @@ const CountScreeen = ({ route }) => {
           display: "flex",
           justifyContent: "center",
           backgroundColor: "blue",
-          width: "98%",
+          width: "95%",
           height: 20,
           borderRadius: 50,
           borderWidth: 2,
@@ -40,9 +53,11 @@ const CountScreeen = ({ route }) => {
             backgroundColor: "red",
             width: `${progreso}%`,
             height: 20,
-            borderRadius: 50,
           }}
         ></View>
+      </View>
+      <View style={{ position: "absolute", bottom: 20, width: "95%" }}>
+        <Button color="red" title="Borrar" onPress={borrarInfo} />
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -10,24 +10,19 @@ import post2 from "../assets/post2.jpeg";
 import post3 from "../assets/post3.jpeg";
 import post4 from "../assets/post4.jpeg";
 import post5 from "../assets/post5.jpeg";
+import { getData } from "../data/dataManager";
 export default function Home() {
   const [info, setInfo] = useState([]);
 
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem("@date_key");
-      jsonValue != null ? setInfo(JSON.parse(jsonValue)) : setInfo([]);
-    } catch (e) {
-      console.log(e);
-      // error reading value
-    }
+  const getInfo = async () => {
+    let res = await getData();
+    setInfo(res);
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  console.log("linea 28 ", info);
+  useFocusEffect(
+    React.useCallback(() => {
+      getInfo();
+    }, [])
+  );
   const navigation = useNavigation();
   return (
     <View>
@@ -63,7 +58,7 @@ export default function Home() {
                   backgroundColor: "rgba(7,3,5,0.1)",
                   marginBottom: 10,
                   borderRadius: 5,
-                  height: 200,
+                  height: 150,
                 }}
               >
                 <Text>{days.title}</Text>
@@ -72,7 +67,7 @@ export default function Home() {
                     display: "flex",
                     justifyContent: "center",
                     backgroundColor: "blue",
-                    width: "98%",
+                    width: "90%",
                     height: 20,
                     borderRadius: 50,
                     borderWidth: 2,
@@ -84,7 +79,6 @@ export default function Home() {
                       backgroundColor: "red",
                       width: `${progreso}%`,
                       height: 20,
-                      borderRadius: 50,
                     }}
                   ></View>
                 </View>

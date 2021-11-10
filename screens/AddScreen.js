@@ -14,6 +14,7 @@ import DatePicker, {
 import DaysDate from "../data/DaysDate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { getData, storeData } from "../data/dataManager";
 
 export default AddScreen = () => {
   const [selectedDate, setSelectedDate] = useState("");
@@ -23,39 +24,18 @@ export default AddScreen = () => {
   // let distance = countDown - now;
   // let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
 
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem("@date_key");
-      return jsonValue != null ? JSON.parse(jsonValue) : [];
-    } catch (e) {
-      console.log(e);
-      // error reading value
-    }
-  };
-
-  const storeData = async (value) => {
-    const DataTotal = await getData();
-    try {
-      const jsonValue = JSON.stringify(value);
-      DataTotal.push(jsonValue);
-      await AsyncStorage.setItem("@date_key", JSON.stringify(DataTotal));
-      console.log(DataTotal);
-    } catch (e) {
-      //saving error
-      console.log(e);
-    }
-  };
   const navigation = useNavigation();
-  const handleAction = () => {
+  const handleAction = async () => {
+    const DataTotal = await getData();
     let id = uuid.v4();
+    let title = text ? text : "Hasta ese dia...";
     let now = new Date().getTime();
     let countDown = new Date(selectedDate).getTime();
-    let datitarada = new DaysDate(id, text, now, countDown);
-
-    storeData(datitarada);
+    const jsonValue = JSON.stringify(new DaysDate(id, title, now, countDown));
+    DataTotal.push(jsonValue);
+    storeData(DataTotal);
     navigation.navigate("StartScreen");
   };
-  console.log(text);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
