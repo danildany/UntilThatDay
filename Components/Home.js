@@ -1,16 +1,10 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { Animated, Dimensions, Image, ScrollView, View } from "react-native";
-import post1 from "../assets/post1.jpeg";
-import post2 from "../assets/post2.jpeg";
-import post3 from "../assets/post3.jpeg";
-import post4 from "../assets/post4.jpeg";
-import post5 from "../assets/post5.jpeg";
+import { ScrollView, View } from "react-native";
 import { getData } from "../data/dataManager";
+
 export default function Home() {
   const [info, setInfo] = useState([]);
 
@@ -47,7 +41,6 @@ export default function Home() {
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("CountScreen", {
-                    dias: dias,
                     days: days,
                   });
                 }}
@@ -83,16 +76,6 @@ export default function Home() {
                   ></View>
                 </View>
               </TouchableOpacity>
-              // <Image
-              //   source={item}
-              //   key={index}
-              //   style={{
-              //     width: -Dimensions.get("window").width - 30,
-              //     height: 250,
-              //     borderRadius: 15,
-              //     marginTop: 20,
-              //   }}
-              // ></Image>
             );
           })}
         </View>

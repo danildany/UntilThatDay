@@ -1,16 +1,27 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, Button } from "react-native";
 import { getData, storeData } from "../data/dataManager";
 
 const CountScreeen = ({ route }) => {
+  const navigation = useNavigation();
+
   let end = route.params.days.end;
   let start = route.params.days.start;
   let now = new Date().getTime();
+  let distance = end - now;
+  let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
   let progreso = Math.round(((now - start) / (end - start)) * 100);
-  const navigation = useNavigation();
-
+  let message = "";
+  if (dias == 1) {
+    message = "Falta 1 dia.";
+  } else if (dias == 0) {
+    message = "Hoy es el dia.";
+  } else if (dias < 0) {
+    message = `El dia ya pasado.`;
+  } else {
+    message = `Faltan ${dias} dias.`;
+  }
   const borrarInfo = async () => {
     let data = await getData();
     for (let i = 0; i < data.length; i++) {
@@ -34,8 +45,7 @@ const CountScreeen = ({ route }) => {
       }}
     >
       <Text>{route.params.days.title}</Text>
-      <Text>{`faltan ${route.params.dias} dias.`}</Text>
-      <Text>{`Progreso ${progreso}% `}</Text>
+      <Text>{message}</Text>
       <View
         style={{
           display: "flex",
@@ -51,8 +61,10 @@ const CountScreeen = ({ route }) => {
         <View
           style={{
             backgroundColor: "red",
-            width: `${progreso}%`,
+            width: `${progreso <= 100 ? progreso : "100"}%`,
             height: 20,
+            display: "flex",
+            alignItems: "center",
           }}
         ></View>
       </View>

@@ -60,7 +60,7 @@ export default function StartScreen() {
           useNativeDriver: true,
         }),
       ]).start();
-    }, 1500);
+    }, 1000);
   }, []);
   const navigation = useNavigation();
   return (
