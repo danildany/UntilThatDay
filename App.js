@@ -1,12 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import StartScreen from "./screens/StartScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AddScreen from "./screens/AddScreen";
-import CountScreeen from "./screens/CountScreeen";
+import CountScreen from "./screens/CountScreen";
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
@@ -21,12 +19,30 @@ export default function App() {
           <Stack.Screen
             name="AddScreen"
             component={AddScreen}
-            // options={{ headerShown: false }}
+            options={{
+              title: "Agregar",
+              headerStyle: {
+                backgroundColor: "#1c4f6c",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
           <Stack.Screen
             name="CountScreen"
-            component={CountScreeen}
-            // options={{ headerShown: false }}
+            component={CountScreen}
+            options={{
+              title: "",
+              headerStyle: {
+                backgroundColor: "#1c4f6c",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

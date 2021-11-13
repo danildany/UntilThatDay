@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
@@ -6,10 +5,11 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import logo from "../assets/logi.png";
+import logo from "../assets/logo.png";
 import Home from "../Components/Home";
 
 export default function StartScreen() {
@@ -62,7 +62,7 @@ export default function StartScreen() {
       ]).start();
     }, 1000);
   }, []);
-  const navigation = useNavigation();
+
   return (
     <View
       style={{
@@ -71,35 +71,40 @@ export default function StartScreen() {
         bottom: 0,
         left: 0,
         right: 0,
+        backgroundColor: "#20314D",
       }}
     >
       <Animated.View
         style={{
           flex: 1,
           zIndex: 1,
-          backgroundColor: "springgreen",
+          backgroundColor: "#1c4f6c",
           transform: [{ translateY: startAnimation }],
         }}
       >
         <Animated.View style={styles.view}>
-          <Animated.Image
+          <TouchableOpacity
             style={{
-              width: 100,
-              height: 100,
-              paddingBottom: 10,
               transform: [
                 { translateX: moveLogo.x },
                 { translateY: moveLogo.y },
                 { scale: scaleLogo },
               ],
             }}
-            source={logo}
-          ></Animated.Image>
+          >
+            <Animated.Image
+              style={{
+                width: 100,
+                height: 100,
+                paddingBottom: 10,
+              }}
+              source={logo}
+            ></Animated.Image>
+          </TouchableOpacity>
+
           <Animated.Text
-            onPress={() => {
-              navigation.navigate("AddScreen");
-            }}
             style={{
+              color: "#fff",
               fontWeight: "bold",
               fontSize: 25,
               transform: [{ scale: scaleTitle }, { translateY: moveTitle.y }],

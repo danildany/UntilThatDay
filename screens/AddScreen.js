@@ -7,24 +7,16 @@ import {
   TextInput,
   View,
 } from "react-native";
-import DatePicker, {
-  getFormatedDate,
-  getToday,
-} from "react-native-modern-datepicker";
+import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
 import DaysDate from "../data/DaysDate";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { getData, storeData } from "../data/dataManager";
 
 export default AddScreen = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [text, setText] = useState("");
-  // let now = new Date().getTime();
-  // let countDown = new Date(selectedDate).getTime();
-  // let distance = countDown - now;
-  // let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
-
   const navigation = useNavigation();
+
   const handleAction = async () => {
     const DataTotal = await getData();
     let id = uuid.v4();
@@ -33,9 +25,11 @@ export default AddScreen = () => {
     let countDown = new Date(selectedDate).getTime();
     const jsonValue = JSON.stringify(new DaysDate(id, title, now, countDown));
     DataTotal.push(jsonValue);
+
     storeData(DataTotal);
     navigation.navigate("StartScreen");
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -50,7 +44,7 @@ export default AddScreen = () => {
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: "gray",
+          backgroundColor: "#20314D",
           flex: 1,
         }}
       >
@@ -60,6 +54,7 @@ export default AddScreen = () => {
             onChangeText={setText}
             value={text}
             style={{
+              backgroundColor: "#32a4c6",
               height: 40,
               margin: 12,
               borderWidth: 1,
@@ -72,6 +67,15 @@ export default AddScreen = () => {
           <DatePicker
             onSelectedChange={(date) => setSelectedDate(date)}
             minimumDate={getFormatedDate(new Date(), "YYYY/MM/DD h:m")}
+            options={{
+              backgroundColor: "#090C08",
+              textHeaderColor: "#FFA25B",
+              textDefaultColor: "#F6E7C1",
+              selectedTextColor: "#fff",
+              mainColor: "#F4722B",
+              textSecondaryColor: "#D6C7A1",
+              borderColor: "rgba(122, 146, 165, 0.1)",
+            }}
           />
         </View>
 

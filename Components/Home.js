@@ -29,47 +29,72 @@ export default function Home() {
             paddingBottom: 25,
           }}
         >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddScreen");
+            }}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-around",
+              backgroundColor: "#2E7355",
+
+              marginBottom: 20,
+              paddingLeft: 20,
+              borderRadius: 5,
+              height: 50,
+            }}
+          >
+            <Text style={{ color: "#fff" }}>Agregar</Text>
+          </TouchableOpacity>
           {info.reverse().map((item, index) => {
             let now = new Date().getTime();
-            let days = JSON.parse(item);
-            let distance = days.end - now;
-            let dias = Math.floor(distance / (1000 * 60 * 60 * 24)) + 1;
+            let dateInfo = JSON.parse(item);
             let progreso = Math.round(
-              ((now - days.start) / (days.end - days.start)) * 100
+              ((now - dateInfo.start) / (dateInfo.end - dateInfo.start)) * 100
             );
             return (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("CountScreen", {
-                    days: days,
+                    dateInfo: dateInfo,
                   });
                 }}
                 key={index}
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  backgroundColor: "rgba(7,3,5,0.1)",
-                  marginBottom: 10,
+                  alignItems: "flex-start",
+                  justifyContent: "space-around",
+                  backgroundColor: "black",
+                  borderColor: "white",
+                  borderWidth: 1,
+                  marginBottom: 20,
+                  paddingLeft: 20,
                   borderRadius: 5,
-                  height: 150,
+                  height: 100,
                 }}
               >
-                <Text>{days.title}</Text>
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 20, color: "#fff" }}
+                >
+                  {dateInfo.title}
+                </Text>
                 <View
                   style={{
                     display: "flex",
                     justifyContent: "center",
-                    backgroundColor: "blue",
+                    backgroundColor: "#152030",
                     width: "90%",
                     height: 20,
                     borderRadius: 50,
+                    borderColor: "#fff",
                     borderWidth: 2,
                     overflow: "hidden",
                   }}
                 >
                   <View
                     style={{
-                      backgroundColor: "red",
+                      backgroundColor: "#32a4c6",
                       width: `${progreso}%`,
                       height: 20,
                     }}
